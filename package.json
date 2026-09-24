@@ -1,0 +1,24 @@
+{
+  "name": "afirmative-pill",
+  "private": true,
+  "description": "Afirmative Pill — E-commerce farmacéutico con GraphQL (Apollo) + CQRS sobre Supabase",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace backend & npm run dev --workspace frontend",
+    "dev:backend": "npm run dev --workspace backend",
+    "dev:frontend": "npm run dev --workspace frontend",
+    "db:migrate": "npm run db:migrate --workspace backend",
+    "db:seed": "npm run db:seed --workspace backend",
+    "projections:rebuild": "npm run projections:rebuild --workspace backend",
+    "codegen": "npm run codegen --workspace frontend",
+    "test": "npm run test --workspace backend",
+    "typecheck": "npm run typecheck --workspaces",
+    "build": "npm run build --workspaces"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
