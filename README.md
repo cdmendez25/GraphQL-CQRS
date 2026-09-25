@@ -78,7 +78,7 @@ flowchart LR
   DL -->|"WHERE id = ANY($1)"| RM
 ```
 
-- **Apollo Client** es el único que habla con el servidor. `ApolloProvider` envuelve toda la app ([`AuthProvider`](frontend/src/auth/AuthContext.tsx), montado en [`main.tsx`](frontend/src/main.tsx)). Un `ApolloLink.split` manda queries y mutations por HTTP y subscriptions por WebSocket, ambos a `/graphql` ([`apollo/client.ts`](frontend/src/apollo/client.ts)).
+- **Apollo Client** es el único que habla con el servidor. `ApolloProvider` envuelve toda la app en la raíz ([`main.tsx`](frontend/src/main.tsx)) con el cliente de la sesión actual ([`AuthContext.tsx`](frontend/src/auth/AuthContext.tsx)). Un `ApolloLink.split` manda queries y mutations por HTTP y subscriptions por WebSocket, ambos a `/graphql` ([`apollo/client.ts`](frontend/src/apollo/client.ts)).
 - **Apollo Server** expone un único schema ([`schema.graphql`](backend/src/schema/schema.graphql)). Los resolvers solo traducen: las Queries leen proyecciones y las Mutations despachan comandos.
 - **Supabase** guarda tres grupos de tablas: el modelo de escritura, el event log (outbox) y el modelo de lectura.
 
@@ -219,7 +219,7 @@ Migraciones en [`supabase/migrations/`](supabase/migrations):
 
 1. **Crear la base de datos en Supabase**
    1. En [supabase.com](https://supabase.com), crea un proyecto nuevo (región recomendada: São Paulo) y guarda la contraseña de la base de datos.
-   2. Botón **Connect** → pestaña **Session pooler** → copia la *connection string*.
+   2. Botón **Connect** → **Direct (Connection string)** → método **Session pooler** → copia la cadena (debe contener `pooler.supabase.com:5432` y el usuario `postgres.<id-del-proyecto>`).
 2. **Configurar el backend**
    ```bash
    cp backend/.env.example backend/.env
@@ -290,7 +290,7 @@ La sesión se guarda por pestaña, así que puedes abrir el paciente y el farmac
 │   └── tests/                       vitest
 ├── frontend/
 │   └── src/
-│       ├── main.tsx                 árbol raíz (AuthProvider → ApolloProvider)
+│       ├── main.tsx                 árbol raíz (AuthProvider → ApolloProvider → rutas)
 │       ├── apollo/client.ts         links HTTP/WS + InMemoryCache
 │       ├── graphql/operations.ts    todas las queries, mutations, subscriptions y fragments
 │       ├── gql/                     tipos generados (GraphQL Code Generator)

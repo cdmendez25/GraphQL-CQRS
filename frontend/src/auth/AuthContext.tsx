@@ -1,4 +1,4 @@
-import { ApolloProvider } from '@apollo/client/react';
+import type { ApolloClient } from '@apollo/client';
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
 import { createApolloClient } from '../apollo/client';
 
@@ -18,6 +18,8 @@ interface Session {
 
 interface AuthValue {
   user: SessionUser | null;
+  /** Cliente Apollo de la sesión actual (lo monta <ApolloProvider> en main.tsx). */
+  apolloClient: ApolloClient;
   signIn: (session: Session) => void;
   signOut: () => void;
 }
@@ -40,9 +42,9 @@ function readSession(): Session | null {
 }
 
 /**
- * Proveedor raíz: guarda la sesión y monta el ApolloProvider con un cliente
- * Apollo ligado al token actual. Al iniciar/cerrar sesión se crea un cliente
- * nuevo (caché limpia + WebSocket autenticado con el nuevo token).
+ * Guarda la sesión y el cliente Apollo ligado a su token. Al iniciar/cerrar
+ * sesión se crea un cliente nuevo (caché limpia + WebSocket autenticado con
+ * el nuevo token).
  */
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(readSession);
@@ -80,13 +82,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     replaceClient(null);
   }, [replaceClient]);
 
-  const value = useMemo(() => ({ user: session?.user ?? null, signIn, signOut }), [session, signIn, signOut]);
-
-  return (
-    <AuthContext.Provider value={value}>
-      <ApolloProvider client={apollo.client}>{children}</ApolloProvider>
-    </AuthContext.Provider>
+  const value = useMemo(
+    () => ({ user: session?.user ?? null, apolloClient: apollo.client, signIn, signOut }),
+    [session, apollo, signIn, signOut],
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth(): AuthValue {

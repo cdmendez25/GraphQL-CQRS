@@ -1,26 +1,35 @@
-import { StrictMode } from 'react';
+import { ApolloProvider } from '@apollo/client/react';
+import { StrictMode, type ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { App } from './App';
-import { AuthProvider } from './auth/AuthContext';
+import { AuthProvider, useAuth } from './auth/AuthContext';
 import { ToastProvider } from './components/Toast';
 import './styles.css';
 
+/** Contexto de Apollo para TODA la app, con el cliente de la sesión actual. */
+function ApolloRoot({ children }: { children: ReactNode }) {
+  const { apolloClient } = useAuth();
+  return <ApolloProvider client={apolloClient}>{children}</ApolloProvider>;
+}
+
 /*
- * Árbol raíz de la aplicación:
- *   AuthProvider  → sesión + <ApolloProvider client={…}> (contexto Apollo para TODA la app)
- *     BrowserRouter
- *       ToastProvider
- *         App (páginas que usan useQuery / useMutation / useSubscription)
+ * Árbol raíz:
+ *   AuthProvider      → sesión (token JWT) y cliente Apollo
+ *     ApolloProvider  → caché y red de Apollo disponibles en cualquier componente
+ *       BrowserRouter → rutas
+ *         App         → páginas que usan useQuery / useMutation / useSubscription
  */
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
-      <BrowserRouter>
-        <ToastProvider>
-          <App />
-        </ToastProvider>
-      </BrowserRouter>
+      <ApolloRoot>
+        <BrowserRouter>
+          <ToastProvider>
+            <App />
+          </ToastProvider>
+        </BrowserRouter>
+      </ApolloRoot>
     </AuthProvider>
   </StrictMode>,
 );

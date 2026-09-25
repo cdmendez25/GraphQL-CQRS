@@ -19,6 +19,9 @@ export function getPool(): pg.Pool {
       connectionString,
       ssl: isLocal ? undefined : { rejectUnauthorized: false },
       max: 10,
+      // Abrir una conexión TLS contra Supabase cuesta segundos: se reutilizan en vez de cerrarlas a los 10 s.
+      idleTimeoutMillis: 5 * 60_000,
+      keepAlive: true,
     });
   }
   return pool;

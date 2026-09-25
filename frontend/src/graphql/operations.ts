@@ -172,17 +172,6 @@ export const MEDICATION_DETAIL_QUERY = graphql(`
   }
 `);
 
-export const ME_QUERY = graphql(`
-  query Me {
-    me {
-      id
-      fullName
-      email
-      role
-    }
-  }
-`);
-
 export const MY_CART_QUERY = graphql(`
   query MyCart {
     myCart {

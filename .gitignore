@@ -6,3 +6,6 @@ dist/
 .DS_Store
 coverage/
 .vite/
+
+# Configuración local de herramientas
+.claude/

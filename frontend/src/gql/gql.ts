@@ -22,7 +22,6 @@ type Documents = {
     "\n  query Catalog($filter: MedicationFilter, $sort: MedicationSort, $first: Int, $after: String) {\n    medications(filter: $filter, sort: $sort, first: $first, after: $after) {\n      totalCount\n      edges {\n        cursor\n        node {\n          ...MedicationCard\n        }\n      }\n      pageInfo {\n        hasNextPage\n        endCursor\n      }\n    }\n  }\n": typeof types.CatalogDocument,
     "\n  query Categories {\n    therapeuticCategories {\n      id\n      name\n      medicationCount\n    }\n  }\n": typeof types.CategoriesDocument,
     "\n  query MedicationDetail($id: ID!) {\n    medication(id: $id) {\n      ...MedicationCard\n      sku\n      dosage\n      indications\n      stockAvailable\n      updatedAt\n      activeIngredient {\n        id\n        name\n      }\n      laboratory {\n        id\n        name\n      }\n      category {\n        id\n        name\n        medications {\n          ...MedicationCard\n        }\n      }\n    }\n  }\n": typeof types.MedicationDetailDocument,
-    "\n  query Me {\n    me {\n      id\n      fullName\n      email\n      role\n    }\n  }\n": typeof types.MeDocument,
     "\n  query MyCart {\n    myCart {\n      ...CartFields\n    }\n  }\n": typeof types.MyCartDocument,
     "\n  query MyOrders {\n    myOrders {\n      ...OrderSummaryFields\n    }\n  }\n": typeof types.MyOrdersDocument,
     "\n  query OrderDetail($id: ID!) {\n    order(id: $id) {\n      ...OrderDetailFields\n    }\n  }\n": typeof types.OrderDetailDocument,
@@ -49,7 +48,6 @@ const documents: Documents = {
     "\n  query Catalog($filter: MedicationFilter, $sort: MedicationSort, $first: Int, $after: String) {\n    medications(filter: $filter, sort: $sort, first: $first, after: $after) {\n      totalCount\n      edges {\n        cursor\n        node {\n          ...MedicationCard\n        }\n      }\n      pageInfo {\n        hasNextPage\n        endCursor\n      }\n    }\n  }\n": types.CatalogDocument,
     "\n  query Categories {\n    therapeuticCategories {\n      id\n      name\n      medicationCount\n    }\n  }\n": types.CategoriesDocument,
     "\n  query MedicationDetail($id: ID!) {\n    medication(id: $id) {\n      ...MedicationCard\n      sku\n      dosage\n      indications\n      stockAvailable\n      updatedAt\n      activeIngredient {\n        id\n        name\n      }\n      laboratory {\n        id\n        name\n      }\n      category {\n        id\n        name\n        medications {\n          ...MedicationCard\n        }\n      }\n    }\n  }\n": types.MedicationDetailDocument,
-    "\n  query Me {\n    me {\n      id\n      fullName\n      email\n      role\n    }\n  }\n": types.MeDocument,
     "\n  query MyCart {\n    myCart {\n      ...CartFields\n    }\n  }\n": types.MyCartDocument,
     "\n  query MyOrders {\n    myOrders {\n      ...OrderSummaryFields\n    }\n  }\n": types.MyOrdersDocument,
     "\n  query OrderDetail($id: ID!) {\n    order(id: $id) {\n      ...OrderDetailFields\n    }\n  }\n": types.OrderDetailDocument,
@@ -114,10 +112,6 @@ export function graphql(source: "\n  query Categories {\n    therapeuticCategori
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query MedicationDetail($id: ID!) {\n    medication(id: $id) {\n      ...MedicationCard\n      sku\n      dosage\n      indications\n      stockAvailable\n      updatedAt\n      activeIngredient {\n        id\n        name\n      }\n      laboratory {\n        id\n        name\n      }\n      category {\n        id\n        name\n        medications {\n          ...MedicationCard\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query MedicationDetail($id: ID!) {\n    medication(id: $id) {\n      ...MedicationCard\n      sku\n      dosage\n      indications\n      stockAvailable\n      updatedAt\n      activeIngredient {\n        id\n        name\n      }\n      laboratory {\n        id\n        name\n      }\n      category {\n        id\n        name\n        medications {\n          ...MedicationCard\n        }\n      }\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(source: "\n  query Me {\n    me {\n      id\n      fullName\n      email\n      role\n    }\n  }\n"): (typeof documents)["\n  query Me {\n    me {\n      id\n      fullName\n      email\n      role\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
