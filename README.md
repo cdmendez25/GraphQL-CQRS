@@ -8,7 +8,7 @@ E-commerce farmacéutico construido con **GraphQL como único canal cliente-serv
 | Backend | Node.js · **Apollo Server 5** · Express 5 · `graphql-ws` (subscriptions) · DataLoader |
 | Base de datos | **Supabase (PostgreSQL)** con conexión directa por protocolo Postgres (`pg`) |
 
-**Integrantes:** _(completar)_
+**Integrante:** Carlos Andrés Díaz Méndez (trabajo individual)
 
 ---
 
